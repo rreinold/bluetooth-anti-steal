@@ -1,0 +1,8 @@
+#!/bin/sh
+# lid closed only: remember connected BT devices, then power BT off
+/usr/sbin/ioreg -r -k AppleClamshellState -d 4 | grep -q "AppleClamshellState. = Yes" || exit 0
+B=/opt/homebrew/bin/blueutil
+$B --connected | sed -n 's/^address: \([^,]*\),.*/\1/p' > ~/.bt_last
+echo "$(date '+%F %T') sleep: saved $(wc -l < ~/.bt_last | tr -d ' ') device(s): $(tr '\n' ' ' < ~/.bt_last)" >> ~/.bt_sleep.log
+$B -p 0
+exit 0
