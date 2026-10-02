@@ -4,7 +4,7 @@ B=/opt/homebrew/bin/blueutil
 $B -p 1
 [ -f ~/.bt_reconnect ] && [ -s ~/.bt_last ] || exit 0
 while read -r addr; do
-  for i in 1 2 3 4 5; do
+  for _ in 1 2 3 4 5; do
     $B --connect "$addr" 2>/dev/null && { echo "$(date '+%F %T') wake: connected $addr" >> ~/.bt_sleep.log; break; }
     sleep 2
   done
